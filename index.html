@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vugandakumva – Speak, I Can Hear. Breaking the Silence on GBV.</title>
+  <meta name="description" content="Vugandakumva Initiative – founded by David Niyomugabo in 2025. A GBV awareness initiative dedicated to education, prevention, and support. Speak, I Can Hear." />
+
+  <!-- Favicon: logo.png -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    /* Stat source label */
+    .stat-source {
+      display: block;
+      font-size: 0.7rem;
+      opacity: 0.55;
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+    /* Ensure slide-bg images cover correctly */
+    .slide-bg {
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+    }
+    .stat-source {
+      display: block;
+      font-size: 0.7rem;
+      opacity: 0.55;
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo img,
+    .logo-wrap img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 3px rgba(107, 203, 119, 0.2);
+    }
+
+    .slide-bg {
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════ -->
+  <header id="header">
+    <nav class="navbar container">
+
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+        <div class="nav-logo-text">
+          Vugandakumva
+          <span>Speak, I Can Hear</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="awareness.html" class="nav-link">Awareness</a></li>
+        <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <div class="nav-social">
+          <a href="https://www.facebook.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.twitter.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.youtube.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </ul>
+
+      <button class="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       HERO SLIDER — 6 real images
+  ════════════════════════════════════════ -->
+  <section id="hero" aria-label="Hero Image Slider">
+    <div class="slider-wrapper">
+
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <div class="slide-bg" style="background-image: url('assets/images/image1.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">GBV Awareness Initiative</span>
+            <h1 class="slide-title">Breaking the Silence<br />One Voice at a Time</h1>
+            <p class="slide-desc">Gender-based violence thrives in silence. Together, we speak up, educate, and protect every person's right to live free from fear.</p>
+            <div class="slide-cta">
+              <a href="awareness.html" class="btn btn-primary">Learn More</a>
+              <a href="contact.html" class="btn btn-outline">Get Support</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('assets/images/image2.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">Education is Power</span>
+            <h1 class="slide-title">Know the Signs.<br />Take a Stand.</h1>
+            <p class="slide-desc">Understanding GBV is the first step toward ending it. Access our educational resources and share awareness with your community.</p>
+            <div class="slide-cta">
+              <a href="resources.html" class="btn btn-primary">View Resources</a>
+              <a href="about.html" class="btn btn-outline">Our Mission</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('assets/images/image3.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">Community &amp; Support</span>
+            <h1 class="slide-title">You Are Not Alone.<br />We Stand With You.</h1>
+            <p class="slide-desc">Survivors deserve dignity, support, and justice. Reach out to our team confidentially — we are here to listen and help.</p>
+            <div class="slide-cta">
+              <a href="contact.html" class="btn btn-primary">Contact Us</a>
+              <a href="resources.html" class="btn btn-outline">Find Help</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('assets/images/image4.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">Every Voice Matters</span>
+            <h1 class="slide-title">Speak Up.<br />Someone Will Hear You.</h1>
+            <p class="slide-desc">Vugandakumva means "Speak, I Can Hear." We are listening — every story matters, every survivor deserves to be heard and supported.</p>
+            <div class="slide-cta">
+              <a href="contact.html" class="btn btn-primary">Speak to Us</a>
+              <a href="awareness.html" class="btn btn-outline">Our Work</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('assets/images/image5.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">Community First</span>
+            <h1 class="slide-title">Together We Build<br />Safer Communities.</h1>
+            <p class="slide-desc">Real change begins at home, in schools, and in our neighborhoods. Join Vugandakumva and help build a future free from violence.</p>
+            <div class="slide-cta">
+              <a href="about.html" class="btn btn-primary">Meet Our Team</a>
+              <a href="contact.html" class="btn btn-outline">Volunteer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('assets/images/image6.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <span class="slide-tag">Justice &amp; Healing</span>
+            <h1 class="slide-title">Healing is Possible.<br />Hope is Here.</h1>
+            <p class="slide-desc">Recovery from GBV takes courage, community, and compassion. We walk alongside survivors every step of the way — from crisis to healing.</p>
+            <div class="slide-cta">
+              <a href="resources.html" class="btn btn-primary">Find Support</a>
+              <a href="contact.html" class="btn btn-outline">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button class="slider-arrow slider-prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+      <button class="slider-arrow slider-next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+
+      <!-- Dots — 6 slides -->
+      <div class="slider-dots" role="tablist">
+        <button class="dot active" aria-label="Slide 1"></button>
+        <button class="dot" aria-label="Slide 2"></button>
+        <button class="dot" aria-label="Slide 3"></button>
+        <button class="dot" aria-label="Slide 4"></button>
+        <button class="dot" aria-label="Slide 5"></button>
+        <button class="dot" aria-label="Slide 6"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       STATS RIBBON
+       All figures sourced from WHO & UN Women
+  ════════════════════════════════════════ -->
+  <section id="stats-ribbon" aria-label="Key GBV Statistics">
+    <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="840" data-suffix="M+">0</span>
+          <span class="stat-label">Women have experienced physical or sexual violence in their lifetime</span>
+          <small class="stat-source">UN Women, November 2025</small>
+        </div>
+
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="1" data-suffix=" in 3">0</span>
+          <span class="stat-label">Women globally subjected to intimate partner or sexual violence</span>
+          <small class="stat-source">WHO Global Estimates, 2024</small>
+        </div>
+
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="38" data-suffix="%">0%</span>
+          <span class="stat-label">Of all murders of women committed by an intimate partner</span>
+          <small class="stat-source">WHO Fact Sheet, 2024</small>
+        </div>
+
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="60" data-suffix="%">0%</span>
+          <span class="stat-label">Of women killed intentionally in 2024 were murdered by partners or family</span>
+          <small class="stat-source">UN Women, 2024</small>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       ABOUT PREVIEW
+  ════════════════════════════════════════ -->
+  <section id="about-preview" class="section-pad">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-visual fade-in">
+          <div class="about-img-wrap">
+            <div class="about-img-placeholder">
+              <img src="assets/images/image5.jpeg" alt="Vugandakumva community awareness" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+          </div>
+          <div class="about-badge">
+            <span class="num">2025</span>
+            <span class="lbl">Founded</span>
+          </div>
+        </div>
+
+        <div class="about-content fade-in">
+          <span class="tag">Who We Are</span>
+          <h2 class="section-title">A Movement Built on Courage &amp; Compassion</h2>
+          <p class="section-subtitle">
+            Vugandakumva, meaning <strong>"Speak, I Can Hear"</strong> is a grassroots initiative founded by <strong>David Niyomugabo</strong> in 2025, dedicated to fighting gender-based violence through education, advocacy, and community empowerment.
+          </p>
+          <ul class="about-list">
+            <li><i class="fas fa-check-circle"></i><span>Community led education programs reaching thousands each year</span></li>
+            <li><i class="fas fa-check-circle"></i><span>Safe reporting channels for survivors and witnesses</span></li>
+            <li><i class="fas fa-check-circle"></i><span>Partnerships with local authorities and health organizations</span></li>
+            <li><i class="fas fa-check-circle"></i><span>Youth engagement and school-based awareness campaigns</span></li>
+          </ul>
+          <a href="about.html" class="btn btn-primary">Our Full Story <i class="fas fa-arrow-right" style="margin-left:8px"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       AWARENESS CARDS PREVIEW
+  ════════════════════════════════════════ -->
+  <section id="awareness-preview" class="section-pad">
+    <div class="container">
+      <div class="text-center">
+        <span class="tag">What Is GBV?</span>
+        <h2 class="section-title">Understanding Gender-Based Violence</h2>
+        <p class="section-subtitle">GBV takes many forms. Knowledge is our most powerful tool for prevention and response.</p>
+      </div>
+      <div class="cards-grid">
+
+        <article class="awareness-card fade-in">
+          <div class="card-img-wrap" style="background: linear-gradient(135deg, #C8FACC, #6BCB77);">
+            <i class="fas fa-heart-crack"></i>
+            <span class="card-cat">Physical</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Physical Violence</h3>
+            <p class="card-text">Any act of physical force used to cause harm, injury, or suffering. It includes hitting, slapping, kicking, burning, and other forms of bodily harm.</p>
+            <a href="awareness.html#physical" class="card-link">Learn more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="awareness-card fade-in">
+          <div class="card-img-wrap" style="background: linear-gradient(135deg, #6BCB77, #2E7D32);">
+            <i class="fas fa-comment-slash"></i>
+            <span class="card-cat">Emotional</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Psychological Abuse</h3>
+            <p class="card-text">Controlling behavior, verbal abuse, threats, isolation, and manipulation that damage a person's mental health and self-worth over time.</p>
+            <a href="awareness.html#psychological" class="card-link">Learn more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="awareness-card fade-in">
+          <div class="card-img-wrap" style="background: linear-gradient(135deg, #2E7D32, #1B5E20);">
+            <i class="fas fa-coins"></i>
+            <span class="card-cat">Economic</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Economic Abuse</h3>
+            <p class="card-text">Controlling access to finances, preventing employment, and creating financial dependency as a means of power and control over a partner or family member.</p>
+            <a href="awareness.html#economic" class="card-link">Learn more <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+      </div>
+      <div class="text-center" style="margin-top: 48px;">
+        <a href="awareness.html" class="btn btn-primary">Explore All Forms of GBV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CTA BANNER
+  ════════════════════════════════════════ -->
+  <section id="cta-banner">
+    <div class="container text-center">
+      <div class="cta-inner">
+        <span class="tag" style="background: rgba(255,255,255,0.15); color: white;">Take Action</span>
+        <h2 class="cta-title">If You or Someone You Know Needs Help</h2>
+        <p class="cta-sub">You don't have to face this alone. Our team is confidential, compassionate, and ready to help. Reach out today — your safety matters.</p>
+        <div class="cta-btns">
+          <a href="contact.html" class="btn btn-primary">Reach Out Now</a>
+          <a href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+             target="_blank" rel="noopener" class="btn btn-outline">
+            <i class="fab fa-whatsapp" style="margin-right:8px;font-size:1.1em"></i>WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="logo-wrap">
+            <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+            <span class="footer-brand-name">Vugandakumva</span>
+          </div>
+          <p class="footer-desc">
+            <em>"Speak, I Can Hear"</em> Breaking the silence on gender-based violence through education, advocacy, and community support. Founded by David Niyomugabo, 2025. Every voice matters. Every survivor deserves dignity.
+          </p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-angle-right"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-angle-right"></i> About Us</a></li>
+            <li><a href="awareness.html"><i class="fas fa-angle-right"></i> Awareness</a></li>
+            <li><a href="resources.html"><i class="fas fa-angle-right"></i> Resources</a></li>
+            <li><a href="contact.html"><i class="fas fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Awareness Resources -->
+        <div class="footer-col">
+          <h4>Awareness Resources</h4>
+          <ul class="footer-links">
+            <li><a href="awareness.html"><i class="fas fa-angle-right"></i> What is GBV?</a></li>
+            <li><a href="awareness.html#signs"><i class="fas fa-angle-right"></i> Warning Signs</a></li>
+            <li><a href="resources.html"><i class="fas fa-angle-right"></i> Hotlines &amp; Help</a></li>
+            <li><a href="resources.html"><i class="fas fa-angle-right"></i> Legal Rights</a></li>
+            <li><a href="resources.html"><i class="fas fa-angle-right"></i> Support Groups</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col footer-contact">
+          <h4>Get In Touch</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+          <p><i class="fas fa-phone"></i>
+            <a href="tel:+250781640246" style="color:inherit;">+250 781 640 246</a>
+          </p>
+          <p><i class="fas fa-phone"></i>
+            <a href="tel:+250791274264" style="color:inherit;">+250 791 274 264</a>
+          </p>
+          <p><i class="fas fa-envelope"></i>
+            <a href="mailto:vugandakumvainitiative@gmail.com" style="color:inherit;">vugandakumvainitiative@gmail.com</a>
+          </p>
+          <p><i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+               target="_blank" rel="noopener" style="color:inherit;">Chat on WhatsApp</a>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Vugandakumva Initiative · Founded by David Niyomugabo. All rights reserved.</p>
+        <p>Designed with <i class="fas fa-heart" style="color:#6BCB77"></i> for survivors everywhere | <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp-btn"
+     href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+     target="_blank"
+     rel="noopener"
+     aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

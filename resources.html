@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources &amp; Support – Vugandakumva</title>
+  <meta name="description" content="GBV support resources including hotlines, legal aid, shelters, and mental health support services. Vugandakumva – Speak, I Can Hear." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    /* ── Circular logo — navbar & footer ── */
+    .nav-logo img,
+    .logo-wrap img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #6BCB77;
+      box-shadow: 0 0 0 3px rgba(107, 203, 119, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════ -->
+  <header id="header">
+    <nav class="navbar container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+        <div class="nav-logo-text">
+          Vugandakumva
+          <span>Speak, I Can Hear</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="awareness.html" class="nav-link">Awareness</a></li>
+        <li><a href="resources.html" class="nav-link active">Resources</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <div class="nav-social">
+          <a href="https://www.facebook.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.twitter.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.youtube.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </ul>
+
+      <button class="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════════════ -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Resources &amp; Support</h1>
+      <p class="page-hero-subtitle">Hotlines, legal aid, shelters, counseling — everything you need to find help</p>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span><i class="fas fa-angle-right"></i></span>
+        <span style="color:white;">Resources</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       EMERGENCY BANNER
+  ════════════════════════════════════════ -->
+  <section style="background: #b71c1c; padding: 24px 0;">
+    <div class="container">
+      <div style="display:flex; align-items:center; gap:16px; color:white; flex-wrap:wrap;">
+        <i class="fas fa-triangle-exclamation" style="font-size:1.6rem; flex-shrink:0;"></i>
+        <div>
+          <strong style="font-size:1rem;">In immediate danger?</strong>
+          <span style="opacity:0.9; margin-left:8px; font-size:0.95rem;">Call emergency services immediately: <strong>112</strong> (Rwanda Emergency) or <strong>3512</strong> (GBV Hotline)</span>
+        </div>
+        <a href="tel:3512" style="margin-left:auto; background:white; color:#b71c1c; padding:10px 24px; border-radius:100px; font-weight:700; font-size:0.9rem; flex-shrink:0;">Call Hotline Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       RESOURCES SECTION
+  ════════════════════════════════════════ -->
+  <section class="section-pad" style="background: var(--bg-off-white);">
+    <div class="container">
+      <div class="text-center">
+        <span class="tag">Support Services</span>
+        <h2 class="section-title">Find the Help You Need</h2>
+        <p class="section-subtitle">Filter by type of support to find the right resource for your situation.</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="resource-categories" style="margin-top:36px; justify-content:center;">
+        <button class="cat-btn active" data-filter="all">All Resources</button>
+        <button class="cat-btn" data-filter="hotline">Hotlines</button>
+        <button class="cat-btn" data-filter="legal">Legal Aid</button>
+        <button class="cat-btn" data-filter="shelter">Shelters</button>
+        <button class="cat-btn" data-filter="mental">Mental Health</button>
+        <button class="cat-btn" data-filter="education">Education</button>
+      </div>
+
+      <!-- Resource Cards -->
+      <div class="resources-grid" style="margin-top:36px;">
+
+        <!-- Hotline 1 -->
+        <div class="resource-card fade-in" data-cat="hotline">
+          <div class="resource-card-icon"><i class="fas fa-phone-volume"></i></div>
+          <h3>GBV Toll-Free Hotline</h3>
+          <p>Rwanda's national 24/7 free hotline for GBV survivors, witnesses, and those at risk. Confidential support from trained counselors.</p>
+          <div style="background:var(--soft-mint); border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+            <strong style="color:var(--dark-accent); font-size:1.3rem;">3512</strong><br />
+            <span style="font-size:0.8rem; color:#555;">24 hours / 7 days a week · Free call</span>
+          </div>
+          <a href="tel:3512"><i class="fas fa-phone"></i> Call Now</a>
+        </div>
+
+        <!-- Hotline 2 — WhatsApp with correct number -->
+        <div class="resource-card fade-in" data-cat="hotline">
+          <div class="resource-card-icon"><i class="fab fa-whatsapp" style="color:#25D366;"></i></div>
+          <h3>WhatsApp Support Line</h3>
+          <p>Not ready to speak? Connect with our support team confidentially via WhatsApp — text at any time, in Kinyarwanda, French, or English.</p>
+          <div style="background:var(--soft-mint); border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+            <strong style="color:var(--dark-accent);">+250 781 640 246</strong><br />
+            <span style="font-size:0.8rem; color:#555;">WhatsApp · Confidential messaging · 24/7</span>
+          </div>
+          <a href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+             target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> Chat Now
+          </a>
+        </div>
+
+        <!-- Legal 1 -->
+        <div class="resource-card fade-in" data-cat="legal">
+          <div class="resource-card-icon"><i class="fas fa-gavel"></i></div>
+          <h3>Legal Aid &amp; Rights</h3>
+          <p>Free legal assistance for GBV survivors navigating the justice system, including filing reports, protective orders, and court representation.</p>
+          <p style="margin-top:8px;"><strong>Rwanda Legal Aid Forum</strong><br /><span style="font-size:0.82rem; color:#666;">Available in all provinces · Pro-bono services</span></p>
+          <a href="contact.html"><i class="fas fa-scale-balanced"></i> Connect with Legal Aid</a>
+        </div>
+
+        <!-- Legal 2 -->
+        <div class="resource-card fade-in" data-cat="legal">
+          <div class="resource-card-icon"><i class="fas fa-file-shield"></i></div>
+          <h3>Know Your Legal Rights</h3>
+          <p>Rwanda's Law No 59/2008 on Prevention and Punishment of GBV protects survivors. Understand your rights and the legal processes available to you.</p>
+          <p style="margin-top:8px; font-size:0.85rem; color:#666;">
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Right to file police report<br />
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Right to protection orders<br />
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Right to free medical care
+          </p>
+          <a href="#"><i class="fas fa-download"></i> Download Rights Guide</a>
+        </div>
+
+        <!-- Shelter 1 -->
+        <div class="resource-card fade-in" data-cat="shelter">
+          <div class="resource-card-icon"><i class="fas fa-house-chimney-heart"></i></div>
+          <h3>Safe House &amp; Shelters</h3>
+          <p>Emergency and transitional shelter for GBV survivors who need a safe place to stay. Accommodations include children and support services.</p>
+          <p style="margin-top:8px;"><strong>Isange One Stop Centre</strong><br /><span style="font-size:0.82rem; color:#666;">Kigali &amp; regional branches · 24hr access</span></p>
+          <a href="contact.html"><i class="fas fa-map-location-dot"></i> Find Nearest Shelter</a>
+        </div>
+
+        <!-- Shelter 2 -->
+        <div class="resource-card fade-in" data-cat="shelter">
+          <div class="resource-card-icon"><i class="fas fa-hands-holding-child"></i></div>
+          <h3>Child-Specific Protection</h3>
+          <p>Dedicated support for children affected by GBV — including safe shelter, psychosocial support, and school re-integration programs.</p>
+          <p style="margin-top:8px;"><strong>National Child Helpline</strong><br /><span style="font-size:0.82rem; color:#666;">116 · Free · 24/7</span></p>
+          <a href="tel:116"><i class="fas fa-phone"></i> Call 116</a>
+        </div>
+
+        <!-- Mental 1 -->
+        <div class="resource-card fade-in" data-cat="mental">
+          <div class="resource-card-icon"><i class="fas fa-brain"></i></div>
+          <h3>Psychological Counseling</h3>
+          <p>Confidential one-on-one and group therapy sessions for GBV survivors, offered by trained mental health professionals with trauma expertise.</p>
+          <p style="margin-top:8px; font-size:0.85rem; color:#666;">
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Individual sessions<br />
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Group therapy<br />
+            <i class="fas fa-check" style="color:var(--primary); margin-right:6px;"></i>Online sessions available
+          </p>
+          <a href="contact.html"><i class="fas fa-calendar-check"></i> Book a Session</a>
+        </div>
+
+        <!-- Mental 2 -->
+        <div class="resource-card fade-in" data-cat="mental">
+          <div class="resource-card-icon"><i class="fas fa-people-arrows"></i></div>
+          <h3>Survivor Support Groups</h3>
+          <p>Community-led support groups connecting survivors with others who have lived experience. Share stories, find solidarity, and rebuild resilience together.</p>
+          <p style="margin-top:8px;"><strong>Weekly meetings</strong><br /><span style="font-size:0.82rem; color:#666;">In-person in Kigali &amp; online for others</span></p>
+          <a href="contact.html"><i class="fas fa-user-plus"></i> Join a Group</a>
+        </div>
+
+        <!-- Education -->
+        <div class="resource-card fade-in" data-cat="education">
+          <div class="resource-card-icon"><i class="fas fa-book-open-reader"></i></div>
+          <h3>Educational Materials</h3>
+          <p>Download free guides, infographics, and toolkits about GBV prevention, recognition, and response in Kinyarwanda, French, and English.</p>
+          <p style="margin-top:8px; font-size:0.85rem; color:#666;">
+            <i class="fas fa-file-pdf" style="color:#b71c1c; margin-right:6px;"></i>Brochures &amp; Factsheets<br />
+            <i class="fas fa-video" style="color:var(--dark-accent); margin-right:6px;"></i>Video Resources<br />
+            <i class="fas fa-chalkboard" style="color:var(--gold); margin-right:6px;"></i>Training Modules
+          </p>
+          <a href="#"><i class="fas fa-download"></i> Download Materials</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       HOW TO REPORT
+  ════════════════════════════════════════ -->
+  <section class="section-pad" style="background: white;">
+    <div class="container">
+      <div class="text-center">
+        <span class="tag">Step by Step</span>
+        <h2 class="section-title">How to Report GBV</h2>
+        <p class="section-subtitle">Reporting can feel overwhelming. Here's a simple, clear guide on what to do and who to contact.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px;">
+
+        <div class="fade-in" style="text-align:center; padding:28px 20px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:var(--soft-mint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem;color:var(--dark-accent);font-family:var(--font-display);font-weight:900;">1</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Get to Safety</h3>
+          <p style="font-size:0.88rem;color:#666;">Remove yourself or the person at risk from immediate danger. Call 112 if life is threatened.</p>
+        </div>
+
+        <div class="fade-in" style="text-align:center; padding:28px 20px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:var(--soft-mint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem;color:var(--dark-accent);font-family:var(--font-display);font-weight:900;">2</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Seek Medical Care</h3>
+          <p style="font-size:0.88rem;color:#666;">Visit the nearest hospital or Isange One Stop Centre. Medical care is free for GBV survivors.</p>
+        </div>
+
+        <div class="fade-in" style="text-align:center; padding:28px 20px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:var(--soft-mint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem;color:var(--dark-accent);font-family:var(--font-display);font-weight:900;">3</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Report to Police</h3>
+          <p style="font-size:0.88rem;color:#666;">File a report at any police station. You have the right to a female officer if preferred. Keep copies of everything.</p>
+        </div>
+
+        <div class="fade-in" style="text-align:center; padding:28px 20px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:var(--soft-mint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem;color:var(--dark-accent);font-family:var(--font-display);font-weight:900;">4</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;">Get Ongoing Support</h3>
+          <p style="font-size:0.88rem;color:#666;">Connect with counseling, legal aid, and support groups to help you heal and rebuild your life.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CTA BANNER
+  ════════════════════════════════════════ -->
+  <section id="cta-banner">
+    <div class="container text-center">
+      <div class="cta-inner">
+        <h2 class="cta-title">Still Have Questions?</h2>
+        <p class="cta-sub">Our team is here to guide you to the right resources. Reach out confidentially — no judgment, just support.</p>
+        <div class="cta-btns">
+          <a href="contact.html" class="btn btn-primary">Contact Our Team</a>
+          <a href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+             target="_blank" rel="noopener" class="btn btn-outline">
+            <i class="fab fa-whatsapp" style="margin-right:8px;"></i>WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="logo-wrap">
+            <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+            <span class="footer-brand-name">Vugandakumva</span>
+          </div>
+          <p class="footer-desc">
+            "Speak, I Can Hear" Breaking the silence on gender-based violence through education, advocacy, and community support. Founded by David Niyomugabo, 2025.
+          </p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/vugandakumvainitiative" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@vugandakumvainitiative" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-angle-right"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-angle-right"></i> About Us</a></li>
+            <li><a href="awareness.html"><i class="fas fa-angle-right"></i> Awareness</a></li>
+            <li><a href="resources.html"><i class="fas fa-angle-right"></i> Resources</a></li>
+            <li><a href="contact.html"><i class="fas fa-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support Resources -->
+        <div class="footer-col">
+          <h4>Support Resources</h4>
+          <ul class="footer-links">
+            <li><a href="tel:3512"><i class="fas fa-angle-right"></i> GBV Hotline: 3512</a></li>
+            <li><a href="tel:116"><i class="fas fa-angle-right"></i> Child Helpline: 116</a></li>
+            <li><a href="tel:112"><i class="fas fa-angle-right"></i> Emergency: 112</a></li>
+            <li><a href="contact.html"><i class="fas fa-angle-right"></i> Legal Aid</a></li>
+            <li><a href="contact.html"><i class="fas fa-angle-right"></i> Shelters</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col footer-contact">
+          <h4>Get In Touch</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+          <p><i class="fas fa-phone"></i>
+            <a href="tel:+250781640246" style="color:inherit;">+250 781 640 246</a>
+          </p>
+          <p><i class="fas fa-phone"></i>
+            <a href="tel:+250791274264" style="color:inherit;">+250 791 274 264</a>
+          </p>
+          <p><i class="fas fa-envelope"></i>
+            <a href="mailto:vugandakumvainitiative@gmail.com" style="color:inherit;">vugandakumvainitiative@gmail.com</a>
+          </p>
+          <p><i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+               target="_blank" rel="noopener" style="color:inherit;">Chat on WhatsApp</a>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Vugandakumva Initiative · Founded by David Niyomugabo. All rights reserved.</p>
+        <p>Designed with <i class="fas fa-heart" style="color:#6BCB77"></i> for survivors everywhere | <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsapp-btn"
+     href="https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support."
+     target="_blank"
+     rel="noopener"
+     aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
