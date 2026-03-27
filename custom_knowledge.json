@@ -1,0 +1,36 @@
+{
+  "mission": "Vugandakumva Initiative was founded to break the silence on Gender-Based Violence (GBV) in Rwanda, providing a safe platform for survivors to speak out, seek help, and heal.",
+  "emergency_contacts": {
+    "police": "112 (National Emergency Number)",
+    "gbv_hotline": "3512 (Isange One Stop Center Toll-Free Hotline)",
+    "child_helpline": "116",
+    "vugandakumva_whatsapp": "+250 781 640 246"
+  },
+  "isange_one_stop_centers": [
+    {
+      "name": "Isange One Stop Center (Kigali/Kacyiru)",
+      "description": "Headquarters. Offers 24/7 free comprehensive services including medical care, psycho-social support, safe rooms, and legal/police assistance. Located at Kacyiru Hospital."
+    },
+    {
+      "name": "Isange One Stop Centers (Nationwide)",
+      "description": "Available in all District Hospitals across Rwanda. They provide holistic and free care for survivors of GBV and child abuse."
+    }
+  ],
+  "rwanda_gbv_laws_and_rights": {
+    "law_n_59_2008": "The Law on Prevention and Punishment of GBV strictly criminalizes physical, sexual, psychological, and economic violence.",
+    "marital_rape": "Marital rape is explicitly recognized and criminalized under Rwandan law.",
+    "survivor_rights": "Survivors have the right to free medical, legal, and psychological assistance, as well as protection from their abusers (via protection orders from courts)."
+  },
+  "reporting_process_to_rib": [
+    "Step 1: Focus on immediate physical safety and seek urgent medical attention if injured.",
+    "Step 2: Go to the nearest Isange One Stop Center (or District Hospital) for free evidence collection and medical care BEFORE washing, changing clothes, or destroying evidence.",
+    "Step 3: At the center, a Rwanda Investigation Bureau (RIB) officer will take your statement confidentially.",
+    "Step 4: You will receive psychosocial counseling and legal guidance from trained professionals."
+  ],
+  "gbv_forms_and_definitions": [
+    "Physical Violence: Any act causing physical harm (hitting, pushing, burning).",
+    "Sexual Violence: Any non-consensual sexual act, attempted sexual act, or unwanted sexual comments.",
+    "Psychological/Emotional Violence: Controlling behavior, isolation, intimidation, verbal abuse, and threats.",
+    "Economic Violence: Denying access to funds, forbidding employment, or controlling financial resources."
+  ]
+}

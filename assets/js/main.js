@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initResourceFilters();
   initFloatingButtons();
   initChatbot();
+  initAuthObserver();
 });
 
 function initNavigation() {
@@ -23,14 +24,15 @@ function initNavigation() {
 
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navMenu.classList.toggle('open');
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
     });
 
-    navMenu.querySelectorAll('.nav-link').forEach((link) => {
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navMenu.classList.remove('open');
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
       });
     });
   }
@@ -42,6 +44,24 @@ function initNavigation() {
       link.classList.add('active');
     }
   });
+}
+
+function initAuthObserver() {
+  const sessionData = localStorage.getItem('vugandakumva_session');
+  const userData = localStorage.getItem('vugandakumva_user');
+  
+  if (sessionData && userData) {
+    try {
+      const user = JSON.parse(userData);
+      const name = user.user_metadata?.full_name || 'My Account';
+      const firstName = name.split(' ')[0];
+      
+      const authLinks = document.querySelectorAll('a[href="auth.html"]');
+      authLinks.forEach(link => {
+        link.innerHTML = `<i class="fas fa-user-check" style="color:var(--primary);"></i> ${firstName}`;
+      });
+    } catch(e) {}
+  }
 }
 
 function initHeaderShadow() {
@@ -265,7 +285,7 @@ function initFloatingButtons() {
 }
 
 function initChatbot() {
-  const CHAT_STORAGE_KEY = 'vugandakumva-chatbot-session-v2';
+  const CHAT_STORAGE_KEY = 'vugandakumva-chatbot-session-v3';
   const fallbackActions = [
     {
       label: 'Call 112',
@@ -301,8 +321,8 @@ function initChatbot() {
     <span class="chatbot-launcher__halo"></span>
     <span class="chatbot-launcher__icon"><i class="fas fa-comments"></i></span>
     <span class="chatbot-launcher__text">
-      <strong>Support Chat</strong>
-      <small>Safe, guided help</small>
+      <strong>AI Chat</strong>
+      <small>Bilingual Assistant</small>
     </span>
   `;
 
@@ -318,10 +338,10 @@ function initChatbot() {
           </div>
           <div>
             <p class="chatbot-header__eyebrow">Vugandakumva</p>
-            <h3>Support Companion</h3>
+            <h3>Vugandakumva AI</h3>
             <div class="chatbot-status" data-chat-status="default">
               <span class="chatbot-status__dot"></span>
-              <span class="chatbot-status__label">Guided support</span>
+              <span class="chatbot-status__label">AI Ready (En/Rw)</span>
             </div>
           </div>
         </div>
@@ -354,7 +374,7 @@ function initChatbot() {
           id="chatbot-input"
           rows="1"
           maxlength="500"
-          placeholder="Ask about support, reporting, counseling, safety, or contact options..."
+          placeholder="Baza AI hano... / Say hi or ask about support, reporting, counseling..."
           data-chat-input
         ></textarea>
         <button type="submit" class="chatbot-send" aria-label="Send message">
@@ -475,25 +495,79 @@ function initChatbot() {
         throw new Error(`Chat request failed with ${response.status}`);
       }
 
-      const data = await response.json();
       typingElement.remove();
 
       const assistantEntry = {
         role: 'assistant',
-        text:
-          typeof data.output === 'string' && data.output.trim()
-            ? data.output.trim()
-            : 'Support is available. If you need urgent help, call 3512 or 112.',
-        actions: Array.isArray(data.actions) ? data.actions : [],
-        mode: data.mode === 'ai' ? 'ai' : 'fallback',
+        text: '',
+        actions: [],
+        mode: 'ai',
+        statusLabel: 'AI live'
       };
+
+      appendMessage(messages, assistantEntry);
+      const lastWrapper = messages.lastElementChild;
+      const contentDiv = lastWrapper.querySelector('.chatbot-message__content');
+      const bubble = lastWrapper.querySelector('.chatbot-bubble');
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              if (data.type === 'metadata') {
+                assistantEntry.actions = data.actions || [];
+                assistantEntry.mode = data.mode || 'ai';
+                assistantEntry.statusLabel = data.statusLabel || '';
+                setStatus(shell, assistantEntry.mode, assistantEntry.statusLabel);
+              } else if (data.type === 'token') {
+                assistantEntry.text += data.text;
+                contentDiv.innerHTML = formatMessage(assistantEntry.text);
+                scrollMessages(messages);
+              }
+            } catch (e) {}
+          }
+        }
+      }
+
+      if (!assistantEntry.text.trim()) {
+        assistantEntry.text = 'Support is available. If you need urgent help, call 3512 or 112.';
+        contentDiv.innerHTML = formatMessage(assistantEntry.text);
+      }
+
+      if (assistantEntry.actions && assistantEntry.actions.length > 0) {
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'chatbot-actions';
+        assistantEntry.actions.forEach((action) => {
+          if (!action || typeof action !== 'object') return;
+          const element = action.url ? document.createElement('a') : document.createElement('button');
+          element.className = `chatbot-action chatbot-action--${action.variant || 'soft'}`;
+          element.textContent = action.label || 'Open';
+          if (action.url) {
+            element.href = action.url;
+            if (action.url.startsWith('http')) {
+              element.target = '_blank';
+              element.rel = 'noopener';
+            }
+          }
+          actionsDiv.appendChild(element);
+        });
+        bubble.appendChild(actionsDiv);
+      }
 
       state.conversation.push({ role: 'assistant', content: assistantEntry.text });
       trimConversation();
       state.transcript.push(assistantEntry);
-      appendMessage(messages, assistantEntry);
-      setStatus(shell, assistantEntry.mode === 'ai' ? 'ai' : 'fallback');
       persistSession();
+      scrollMessages(messages);
     } catch (error) {
       console.error(error);
       typingElement.remove();
@@ -547,6 +621,7 @@ function renderWelcome(container, pageName) {
   appendMessage(container, {
     role: 'assistant',
     text: welcomeText,
+    mode: 'ai',
     actions: [
       { label: 'Open Resources', url: '/resources.html', variant: 'primary' },
       { label: 'Contact Team', url: '/contact.html', variant: 'soft' },
@@ -572,7 +647,10 @@ function appendMessage(container, entry) {
 
   const meta = document.createElement('div');
   meta.className = 'chatbot-message__meta';
-  meta.textContent = entry.role === 'user' ? 'You' : entry.mode === 'ai' ? 'AI-assisted' : 'Support guide';
+  meta.textContent =
+    entry.role === 'user'
+      ? 'You'
+      : entry.metaLabel || (entry.mode === 'ai' ? 'Vugandakumva AI' : 'Support guide');
 
   const content = document.createElement('div');
   content.className = 'chatbot-message__content';
@@ -623,7 +701,7 @@ function appendTyping(container) {
   const bubble = document.createElement('div');
   bubble.className = 'chatbot-bubble chatbot-bubble--typing';
   bubble.innerHTML = `
-    <div class="chatbot-message__meta">Support guide</div>
+    <div class="chatbot-message__meta">Vugandakumva AI</div>
     <div class="chatbot-typing" aria-label="Typing">
       <span></span>
       <span></span>
@@ -674,6 +752,8 @@ function getPromptSuggestions(pageName) {
 
   return (
     byPage[pageName] || [
+      'Hi',
+      'How are you?',
       'I need urgent support',
       'How do I report abuse?',
       'Find legal help',
@@ -684,18 +764,18 @@ function getPromptSuggestions(pageName) {
 
 function getWelcomeMessage(pageName) {
   if (pageName === 'resources.html') {
-    return 'I can help you quickly find hotlines, counseling, legal aid, shelters, and reporting steps from this page.';
+    return 'Hello. I am Vugandakumva AI, and I can help you quickly find hotlines, counseling, legal aid, shelters, and reporting steps from this page.';
   }
 
   if (pageName === 'contact.html') {
-    return 'I can guide you to the right phone number, WhatsApp support, email contact, or the best next step before reaching out.';
+    return 'Hello. I am Vugandakumva AI, and I can guide you to the right phone number, WhatsApp support, email contact, or the best next step before reaching out.';
   }
 
   if (pageName === 'awareness.html') {
-    return 'I can explain GBV, warning signs, and where someone can go for help if support is needed right now.';
+    return 'Hello. I am Vugandakumva AI, and I can explain GBV, warning signs, and where someone can go for help if support is needed right now.';
   }
 
-  return 'I am here to help with safety, GBV awareness, reporting steps, counseling, shelter options, and direct contact with the Vugandakumva team.';
+  return 'Hello. I am Vugandakumva AI, here to help with safety, GBV awareness, reporting steps, counseling, shelter options, and direct contact with the Vugandakumva team.';
 }
 
 function buildOfflineFallback(message, pageName) {
@@ -718,10 +798,10 @@ function buildOfflineFallback(message, pageName) {
     return 'You can reach the team by WhatsApp at +250 781 640 246, by phone at +250 781 640 246 or +250 791 274 264, or by email at vugandakumvainitiative@gmail.com.';
   }
 
-  return 'Live chat is temporarily unavailable, but support is still here. You can call 3512 for GBV help, call 112 in an emergency, use WhatsApp at +250 781 640 246, or open the Resources and Contact pages for direct guidance.';
+  return 'The local AI is unavailable for this moment, but support is still here. You can call 3512 for GBV help, call 112 in an emergency, use WhatsApp at +250 781 640 246, or open the Resources and Contact pages for direct guidance.';
 }
 
-function setStatus(shell, mode) {
+function setStatus(shell, mode, customLabel = '') {
   const status = shell.querySelector('.chatbot-status');
   const label = shell.querySelector('.chatbot-status__label');
 
@@ -732,7 +812,7 @@ function setStatus(shell, mode) {
   status.dataset.chatStatus = mode;
 
   if (mode === 'ai') {
-    label.textContent = 'AI live';
+    label.textContent = customLabel || 'AI live';
     return;
   }
 
@@ -746,7 +826,7 @@ function setStatus(shell, mode) {
     return;
   }
 
-  label.textContent = 'Guided support';
+  label.textContent = 'Local AI ready';
 }
 
 function scrollMessages(container) {
