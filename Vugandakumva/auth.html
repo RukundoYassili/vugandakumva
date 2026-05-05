@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – Vugandakumva</title>
+
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Corrected Stylesheet Link -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    .nav-logo img,
+    .logo-wrap img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #6BCB77;
+      box-shadow: 0 0 0 3px rgba(107, 203, 119, 0.2);
+    }
+    
+    .auth-section {
+      padding: 120px 20px 80px;
+      background: var(--bg-off-white);
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-card {
+      background: white;
+      border-radius: 20px;
+      padding: 50px 40px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .auth-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .auth-header h2 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+    .auth-header p {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+    }
+    .auth-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(220, 107, 43, 0.3);
+    }
+    .auth-submit:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    .auth-submit:disabled {
+      background: #e0e0e0;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .auth-toggle {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.95rem;
+      color: var(--text-gray);
+    }
+    .auth-toggle a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    #signup-fields { display: none; }
+    .auth-card.is-signup #signup-fields { display: block; }
+    
+    .auth-alert {
+      padding: 14px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      display: none;
+      font-size: 0.95rem;
+      align-items: center;
+      gap: 10px;
+    }
+    .auth-error { background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; display: none !important;}
+    .auth-error.active { display: flex !important; }
+    .auth-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; display: none !important;}
+    .auth-success.active { display: flex !important; }
+    
+    .logged-in-state { display: none; text-align: center; }
+    .logged-in-state.active { display: block; }
+    .auth-form.hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <nav class="navbar container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+        <div class="nav-logo-text">
+          Vugandakumva
+          <span>Speak, I Can Hear</span>
+        </div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="awareness.html" class="nav-link">Awareness</a></li>
+        <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="auth.html" class="nav-link active"><i class="fas fa-lock"></i> Login</a></li>
+        <div class="nav-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </ul>
+      <button class="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- AUTH SECTION -->
+  <section class="auth-section">
+    <div class="auth-card fade-in" id="auth-card">
+      <div class="auth-alert auth-error" id="auth-error"><i class="fas fa-exclamation-circle"></i> <span>Error message</span></div>
+      <div class="auth-alert auth-success" id="auth-success"><i class="fas fa-check-circle"></i> <span>Success message</span></div>
+
+      <div class="logged-in-state" id="logged-in-state">
+        <div class="auth-header">
+          <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 20px;">
+             <i class="fas fa-user-circle"></i>
+          </div>
+          <h2>Welcome Back!</h2>
+          <p>You are officially signed into Vugandakumva and connected to the support network.</p>
+        </div>
+        <button class="auth-submit" id="btn-logout" style="background: var(--bg-card); color: var(--text-dark); border: 1px solid var(--border-color); box-shadow: none;">Sign Out</button>
+      </div>
+
+      <form class="auth-form" id="auth-form" style="text-align: left;">
+        <div class="auth-header">
+          <h2 id="auth-title">Welcome Back</h2>
+          <p id="auth-subtitle">Sign in to securely access support.</p>
+        </div>
+
+        <div id="signup-fields">
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="name" style="display:block; margin-bottom:8px; font-weight:500; font-family: var(--font-body); color: var(--text-dark);">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; font-family: var(--font-body);" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="email" style="display:block; margin-bottom:8px; font-weight:500; font-family: var(--font-body); color: var(--text-dark);">Email Address</label>
+          <input type="email" id="email" required placeholder="you@example.com" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; font-family: var(--font-body);" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 25px;">
+          <label for="password" style="display:block; margin-bottom:8px; font-weight:500; font-family: var(--font-body); color: var(--text-dark);">Password</label>
+          <input type="password" id="password" required placeholder="••••••••" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; font-family: var(--font-body);" />
+        </div>
+
+        <button type="submit" class="auth-submit" id="auth-submit-btn">Sign In</button>
+
+        <div class="auth-toggle">
+          <span id="toggle-text">Don't have an account?</span> 
+          <a id="toggle-link">Create one safely</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-wrap">
+            <img src="assets/images/logo.png" alt="Vugandakumva Logo" />
+            <span class="footer-brand-name">Vugandakumva</span>
+          </div>
+          <p class="footer-desc">
+          "Speak, I Can Hear" Breaking the silence on gender-based violence through education, advocacy, and community support.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+        <p>© 2025 Vugandakumva Initiative. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Embedded inline JS toggle to keep it fully functional
+    document.addEventListener('DOMContentLoaded', () => {
+      const authCard = document.getElementById('auth-card');
+      const toggleLink = document.getElementById('toggle-link');
+      const authTitle = document.getElementById('auth-title');
+      const authSubtitle = document.getElementById('auth-subtitle');
+      const authSubmitBtn = document.getElementById('auth-submit-btn');
+      const toggleText = document.getElementById('toggle-text');
+      
+      let isSignup = false;
+
+      if (toggleLink) {
+        toggleLink.addEventListener('click', () => {
+          isSignup = !isSignup;
+          authCard.classList.toggle('is-signup', isSignup);
+          
+          authTitle.textContent = isSignup ? 'Create Account' : 'Welcome Back';
+          authSubtitle.textContent = isSignup ? 'Join us securely in supporting the mission.' : 'Sign in to securely access support.';
+          authSubmitBtn.textContent = isSignup ? 'Create Account' : 'Sign In';
+          toggleText.textContent = isSignup ? 'Already have an account?' : 'Don\'t have an account?';
+          toggleLink.textContent = isSignup ? 'Sign in here' : 'Create one safely';
+        });
+      }
+    });
+  </script>
+  <script src="assets/js/auth.js"></script>
+</body>
+</html>
