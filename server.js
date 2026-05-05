@@ -55,7 +55,10 @@ if (!supabase) {
 
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
-app.use(express.static(path.join(__dirname)));
+
+const distPath = path.join(__dirname, 'client', 'dist');
+const serveReact = existsSync(distPath);
+app.use(express.static(serveReact ? distPath : path.join(__dirname)));
 
 // --- AUTHENTICATION ROUTES ---
 
@@ -153,6 +156,11 @@ app.post('/chat', async (req, res) => {
     }
   }
 });
+
+// SPA catch-all: serve React index.html for all non-API GET routes
+if (serveReact) {
+  app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
+}
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

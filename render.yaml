@@ -1,11 +1,17 @@
 services:
   - type: web
-    name: vugandakumva-chatbot
+    name: vugandakumva
     env: node
-    buildCommand: npm install
+    buildCommand: npm install && npm --prefix client install && npm run build
     startCommand: npm start
     envVars:
-      - key: OPENAI_API_KEY
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
         sync: false
       - key: OLLAMA_ENABLED
         value: "false"
