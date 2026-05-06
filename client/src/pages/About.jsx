@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import PageHero from '../components/PageHero';
 import CTABanner from '../components/CTABanner';
-import { useFadeIn } from '../hooks/useFadeIn';
+import { useFadeIn, useFadeInList } from '../hooks/useFadeIn';
 
 const teamMembers = [
   { name: 'David Niyomugabo', role: 'Founder — Strategic Lead & Vision Holder', img: '/images/David.jpeg', fallback: 'fa-user-tie', fallbackBg: 'linear-gradient(135deg,#C8FACC,#2E7D32)' },
@@ -19,6 +19,12 @@ const teamMembers = [
   { name: 'Gloria Hycentha UWIMANA', role: 'Coordinator — Operations & Team Coordination Lead', img: '/images/uwimana.jpeg', fallback: 'fa-user', fallbackBg: 'linear-gradient(135deg,#FFF8E1,#F4B400)', fallbackColor: '#b07d00' },
 ];
 
+const missionCards = [
+  { icon: 'fa-bullseye', title: 'Our Mission', text: 'To raise awareness, educate communities, and provide accessible support pathways that reduce gender-based violence and empower survivors to reclaim their lives.', accent: '#6BCB77', iconBg: '#C8FACC', iconColor: '#2E7D32' },
+  { icon: 'fa-eye', title: 'Our Vision', text: 'A society where every individual lives free from gender-based violence — where communities actively protect the vulnerable and perpetrators are held accountable.', accent: '#F4B400', iconBg: '#FFF8E1', iconColor: '#e0920d' },
+  { icon: 'fa-star', title: 'Our Values', text: 'Dignity, compassion, courage, inclusivity, and transparency guide every program, partnership, and conversation we engage in — no matter the context.', accent: '#2E7D32', iconBg: '#E8F5E9', iconColor: '#1B5E20' },
+];
+
 function TeamCard({ member }) {
   return (
     <div className="bg-white rounded-[24px] overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.07)] transition-all duration-400 hover:-translate-y-2 hover:shadow-[0_16px_48px_rgba(46,125,50,0.15)] text-center group mx-2">
@@ -29,7 +35,7 @@ function TeamCard({ member }) {
             e.target.parentElement.innerHTML = `<div style="width:100%;height:100%;background:${member.fallbackBg};display:flex;align-items:center;justify-content:center;font-size:4rem;color:${member.fallbackColor || 'white'}"><i class="fas ${member.fallback}"></i></div>`;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
       </div>
       <div className="p-6">
         <h4 className="font-['Playfair_Display'] text-[1.05rem] font-bold mb-1.5">{member.name}</h4>
@@ -51,36 +57,47 @@ function TeamCard({ member }) {
   );
 }
 
+function SectionLabel({ children }) {
+  return (
+    <div className="inline-flex items-center gap-3 mb-5">
+      <div className="w-6 h-px bg-[#6BCB77]" />
+      <span className="inline-block bg-[#C8FACC] text-[#2E7D32] text-[0.75rem] font-bold tracking-[0.12em] uppercase px-4 py-1.5 rounded-full">{children}</span>
+      <div className="w-6 h-px bg-[#6BCB77]" />
+    </div>
+  );
+}
+
 export default function About() {
   const visualRef = useFadeIn();
   const contentRef = useFadeIn();
+  const cardRefs = useFadeInList(3);
 
   return (
     <>
       <PageHero title="About Vugandakumva" subtitle="Our story, our mission, and the people driving change" breadcrumb="About" />
 
       {/* Mission / Vision / Values */}
-      <section className="py-[100px] bg-[#F8FAF9]">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <section className="py-[100px] bg-[#F8FAF9] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[#6BCB77]/5 pointer-events-none orb-float-slow" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-[#C8FACC]/30 pointer-events-none orb-float-mid" />
+        <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <div className="text-center">
-            <span className="inline-block bg-[#C8FACC] text-[#2E7D32] text-[0.75rem] font-bold tracking-[0.12em] uppercase px-4 py-1.5 rounded-full mb-4">Our Purpose</span>
+            <SectionLabel>Our Purpose</SectionLabel>
             <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] leading-[1.2] mb-4">Mission, Vision &amp; Values</h2>
             <p className="text-[1.05rem] text-gray-500 max-w-[600px] mx-auto">Everything we do is guided by a commitment to dignity, safety, and justice for every person.</p>
           </div>
           <div className="grid grid-cols-3 gap-7 mt-14 max-md:grid-cols-1">
-            {[
-              { icon: 'fa-bullseye', title: 'Our Mission', text: 'To raise awareness, educate communities, and provide accessible support pathways that reduce gender-based violence and empower survivors to reclaim their lives.', borderColor: '#6BCB77', iconBg: '#C8FACC', iconColor: '#2E7D32' },
-              { icon: 'fa-eye', title: 'Our Vision', text: 'A society where every individual lives free from gender-based violence — where communities actively protect the vulnerable and perpetrators are held accountable.', borderColor: '#F4B400', iconBg: '#FFF8E1', iconColor: '#e0920d' },
-              { icon: 'fa-star', title: 'Our Values', text: 'Dignity, compassion, courage, inclusivity, and transparency guide every program, partnership, and conversation we engage in — no matter the context.', borderColor: '#2E7D32', iconBg: '#E8F5E9', iconColor: '#1B5E20' },
-            ].map((card) => (
-              <div key={card.title} className="bg-white rounded-[24px] p-9 text-center shadow-[0_2px_20px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(46,125,50,0.12)]"
-                style={{ borderTop: `4px solid ${card.borderColor}` }}>
-                <div className="w-[76px] h-[76px] rounded-full flex items-center justify-center text-[1.9rem] mx-auto mb-6"
+            {missionCards.map((card, i) => (
+              <div key={card.title} ref={el => cardRefs.current[i] = el}
+                className="fade-in bg-white rounded-[24px] p-9 text-center shadow-[0_2px_20px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(46,125,50,0.12)] relative overflow-hidden group"
+                style={{ borderTop: `4px solid ${card.accent}` }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#F8FAF9] opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+                <div className="w-[76px] h-[76px] rounded-full flex items-center justify-center text-[1.9rem] mx-auto mb-6 relative z-10"
                   style={{ background: card.iconBg, color: card.iconColor }}>
                   <i className={`fas ${card.icon}`}></i>
                 </div>
-                <h3 className="font-['Playfair_Display'] text-[1.35rem] mb-3">{card.title}</h3>
-                <p className="text-[0.92rem] text-gray-500 leading-[1.7]">{card.text}</p>
+                <h3 className="font-['Playfair_Display'] text-[1.35rem] mb-3 relative z-10">{card.title}</h3>
+                <p className="text-[0.92rem] text-gray-500 leading-[1.7] relative z-10">{card.text}</p>
               </div>
             ))}
           </div>
@@ -91,15 +108,22 @@ export default function About() {
       <section className="py-[100px] bg-white">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-2 gap-[80px] items-center max-md:grid-cols-1 max-md:gap-14">
-            <div ref={visualRef} className="fade-in">
-              <div className="rounded-[24px] overflow-hidden shadow-[0_8px_48px_rgba(46,125,50,0.15)] h-[500px]">
+            <div ref={visualRef} className="fade-in-left relative">
+              <div className="rounded-[24px] overflow-hidden shadow-[0_8px_48px_rgba(46,125,50,0.18)] h-[500px]">
                 <img src="/images/image6.jpeg" alt="Our Story – Vugandakumva"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   onError={e => { e.target.parentElement.style.background = 'linear-gradient(135deg,#2E7D32,#6BCB77)'; e.target.style.display = 'none'; }} />
               </div>
+              {/* Quote card overlay */}
+              <div className="absolute bottom-[-24px] left-[-24px] max-w-[260px] glass rounded-[20px] p-5 shadow-[0_12px_36px_rgba(46,125,50,0.15)]">
+                <i className="fas fa-quote-left text-[#6BCB77] text-[1.4rem] mb-2 block"></i>
+                <p className="text-[0.82rem] text-gray-600 leading-[1.6] italic">"Every voice matters. Every story deserves to be heard."</p>
+                <strong className="text-[0.78rem] text-[#2E7D32] block mt-2">— David Niyomugabo, Founder</strong>
+              </div>
             </div>
-            <div ref={contentRef} className="fade-in">
-              <span className="inline-block bg-[#C8FACC] text-[#2E7D32] text-[0.75rem] font-bold tracking-[0.12em] uppercase px-4 py-1.5 rounded-full mb-5">Our Story</span>
+
+            <div ref={contentRef} className="fade-in-right">
+              <SectionLabel>Our Story</SectionLabel>
               <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] leading-[1.2] mb-6">Born from Silence.<br/>Built for Change.</h2>
               <p className="text-gray-500 mb-5 text-[0.97rem] leading-[1.8]">
                 Vugandakumva — a Kinyarwanda phrase meaning <strong className="text-[#2E7D32]">"Speak, I Can Hear"</strong> — was born from a simple, urgent truth: most victims of gender-based violence suffer in silence, not because they don't want help, but because no one is listening.
@@ -111,17 +135,18 @@ export default function About() {
                 Today, we run education programs in schools, collaborate with local authorities, train community health workers, and maintain digital resources for survivors and allies everywhere.
               </p>
               <div className="grid grid-cols-2 gap-5 mb-9">
-                <div className="bg-[#C8FACC] rounded-[20px] p-6 text-center">
-                  <span className="font-['Playfair_Display'] text-[2.5rem] font-black text-[#2E7D32] block">8</span>
-                  <span className="text-[0.82rem] text-[#2E7D32] font-bold">Team Members</span>
+                <div className="rounded-[20px] p-6 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #C8FACC, #6BCB77)' }}>
+                  <div className="absolute inset-0 pattern-dots opacity-20" />
+                  <span className="font-['Playfair_Display'] text-[2.5rem] font-black text-white block relative z-10">8</span>
+                  <span className="text-[0.82rem] text-white font-bold relative z-10">Team Members</span>
                 </div>
-                <div className="bg-[#FFF8E1] rounded-[20px] p-6 text-center">
-                  <span className="font-['Playfair_Display'] text-[2.5rem] font-black text-[#b07d00] block">10</span>
-                  <span className="text-[0.82rem] text-[#b07d00] font-bold">People Reached So Far</span>
+                <div className="rounded-[20px] p-6 text-center" style={{ background: 'linear-gradient(135deg, #FFF8E1, #F4B400)' }}>
+                  <span className="font-['Playfair_Display'] text-[2.5rem] font-black text-[#b07d00] block">10+</span>
+                  <span className="text-[0.82rem] text-[#b07d00] font-bold">People Reached</span>
                 </div>
               </div>
               <Link to="/contact"
-                className="inline-flex items-center gap-2.5 px-9 py-4 rounded-[30px] bg-[#6BCB77] text-white font-bold text-[0.95rem] shadow-[0_4px_24px_rgba(107,203,119,0.4)] transition-all duration-300 hover:bg-[#2E7D32] hover:-translate-y-0.5">
+                className="inline-flex items-center gap-2.5 px-9 py-4 rounded-[30px] bg-[#6BCB77] text-white font-bold text-[0.95rem] shadow-[0_4px_24px_rgba(107,203,119,0.4)] transition-all duration-300 hover:bg-[#2E7D32] hover:gap-4 hover:-translate-y-0.5">
                 Partner With Us <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
@@ -130,10 +155,12 @@ export default function About() {
       </section>
 
       {/* Team Carousel */}
-      <section className="py-[100px] bg-[#F8FAF9] overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <section className="py-[100px] bg-gradient-to-br from-[#F8FAF9] to-[#EBF5EB] overflow-hidden relative">
+        <div className="absolute inset-0 pattern-dots opacity-30 pointer-events-none" />
+        <div className="absolute top-[-60px] right-[-60px] w-[300px] h-[300px] rounded-full bg-[#6BCB77]/10 orb-float-slow pointer-events-none" />
+        <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <div className="text-center mb-14">
-            <span className="inline-block bg-[#C8FACC] text-[#2E7D32] text-[0.75rem] font-bold tracking-[0.12em] uppercase px-4 py-1.5 rounded-full mb-4">The People</span>
+            <SectionLabel>The People</SectionLabel>
             <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] leading-[1.2] mb-4">Meet Our Dedicated Team</h2>
             <p className="text-[1.05rem] text-gray-500 max-w-[600px] mx-auto">Eight passionate advocates, educators, and community leaders committed to ending GBV, one conversation at a time.</p>
           </div>
@@ -170,7 +197,7 @@ export default function About() {
             <i className="fas fa-chevron-right"></i>
           </button>
         </div>
-        <div className="team-pagination mt-2 flex justify-center gap-2" />
+        <div className="team-pagination mt-2 flex justify-center gap-2 relative z-10" />
       </section>
 
       <CTABanner

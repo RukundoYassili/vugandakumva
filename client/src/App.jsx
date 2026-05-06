@@ -7,6 +7,9 @@ import Awareness from './pages/Awareness';
 import Resources from './pages/Resources';
 import Contact from './pages/Contact';
 import Auth from './pages/Auth';
+import ReportWizard from './pages/ReportWizard';
+import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -19,6 +22,12 @@ export default function App() {
     <>
       <ScrollToTop />
       <Routes>
+        {/* Standalone pages (own Navbar/Footer or none) */}
+        <Route path="/report" element={<ReportWizard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+
+        {/* Main site layout */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

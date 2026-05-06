@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { readFileSync, existsSync } from 'fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createClient } from '@supabase/supabase-js';
+import multer from 'multer';
 
 dotenv.config();
 
@@ -47,7 +48,11 @@ if (!hasGeminiKey) {
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
+const supabaseAdmin = supabaseUrl && supabaseServiceKey
+  ? createClient(supabaseUrl, supabaseServiceKey, { auth: { autoRefreshToken: false, persistSession: false } })
+  : supabase;
 
 if (!supabase) {
   console.warn('Supabase URL or Key is missing. Auth routes will be unavailable.');
@@ -157,6 +162,169 @@ app.post('/chat', async (req, res) => {
   }
 });
 
+// --- CASE MANAGEMENT ROUTES ---
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
+
+function triageRisk({ violenceType = [], helpNeeded = [], incidentDate } = {}) {
+  const types = violenceType.map(t => t.toLowerCase());
+  const help = helpNeeded.map(h => h.toLowerCase());
+  if (types.includes('physical') || types.includes('sexual')) {
+    if (help.includes('shelter') || help.includes('medical')) return 'high';
+    if (incidentDate && (Date.now() - new Date(incidentDate)) / 36e5 < 48) return 'high';
+    return 'medium';
+  }
+  if (types.includes('psychological') || types.includes('economic')) return 'medium';
+  return 'low';
+}
+
+async function generateCaseCode(client) {
+  for (let i = 0; i < 10; i++) {
+    const yy = new Date().getFullYear().toString().slice(-2);
+    const num = Math.floor(100000 + Math.random() * 900000);
+    const code = `VN-${yy}-${num}`;
+    const { data } = await client.from('cases').select('id').eq('case_code', code).maybeSingle();
+    if (!data) return code;
+  }
+  throw new Error('Case code generation failed');
+}
+
+app.post('/api/report', async (req, res) => {
+  if (!supabase) return res.status(500).json({ error: 'Database unavailable' });
+  const { identityType, violenceType, incidentDate, incidentLocation, incidentDescription, peopleInvolved, helpNeeded, userId } = req.body;
+  if (!Array.isArray(violenceType) || violenceType.length === 0) {
+    return res.status(400).json({ error: 'At least one violence type is required' });
+  }
+  try {
+    const caseCode = await generateCaseCode(supabase);
+    const riskLevel = triageRisk({ violenceType, helpNeeded, incidentDate });
+    const { data: newCase, error: caseErr } = await supabase.from('cases').insert({
+      case_code: caseCode,
+      user_id: userId || null,
+      identity_type: identityType || 'anonymous',
+      violence_type: violenceType,
+      incident_date: incidentDate || null,
+      incident_location: incidentLocation || null,
+      incident_description: incidentDescription || null,
+      people_involved: peopleInvolved || null,
+      help_needed: helpNeeded || [],
+      risk_level: riskLevel,
+      status: 'submitted',
+    }).select().single();
+    if (caseErr) throw caseErr;
+    await supabase.from('case_timeline').insert({
+      case_id: newCase.id,
+      status: 'submitted',
+      note: 'Report received and logged securely.',
+    });
+    return res.status(201).json({ caseCode, caseId: newCase.id, riskLevel });
+  } catch (err) {
+    console.error('Report submission error:', err.message);
+    return res.status(500).json({ error: 'Failed to submit report. Please try again.' });
+  }
+});
+
+app.get('/api/case/:code', async (req, res) => {
+  if (!supabase) return res.status(500).json({ error: 'Database unavailable' });
+  try {
+    const { data: c, error } = await supabase.from('cases').select('*').eq('case_code', req.params.code.toUpperCase()).maybeSingle();
+    if (error || !c) return res.status(404).json({ error: 'Case not found. Please check your case code.' });
+    const [{ data: timeline }, { data: messages }] = await Promise.all([
+      supabase.from('case_timeline').select('*').eq('case_id', c.id).order('created_at', { ascending: true }),
+      supabase.from('messages').select('*').eq('case_id', c.id).order('created_at', { ascending: true }),
+    ]);
+    return res.json({ case: c, timeline: timeline || [], messages: messages || [] });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.post('/api/case/:code/evidence', upload.single('file'), async (req, res) => {
+  if (!supabase) return res.status(500).json({ error: 'Database unavailable' });
+  const file = req.file;
+  if (!file) return res.status(400).json({ error: 'No file provided' });
+  try {
+    const { data: c } = await supabase.from('cases').select('id').eq('case_code', req.params.code.toUpperCase()).maybeSingle();
+    if (!c) return res.status(404).json({ error: 'Case not found' });
+    const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const storagePath = `${c.id}/${Date.now()}-${safeName}`;
+    const storageClient = supabaseAdmin || supabase;
+    const { error: uploadErr } = await storageClient.storage.from('evidence').upload(storagePath, file.buffer, { contentType: file.mimetype, upsert: false });
+    if (uploadErr) throw uploadErr;
+    const fileType = file.mimetype.startsWith('image/') ? 'image' : file.mimetype.startsWith('audio/') ? 'audio' : 'document';
+    const { data: ev, error: dbErr } = await supabase.from('evidence').insert({
+      case_id: c.id, storage_key: storagePath, file_name: file.originalname, file_type: fileType, file_size: file.size,
+    }).select().single();
+    if (dbErr) throw dbErr;
+    return res.status(201).json({ evidenceId: ev.id, storagePath });
+  } catch (err) {
+    console.error('Evidence upload error:', err.message);
+    return res.status(500).json({ error: 'Upload failed. Please try again.' });
+  }
+});
+
+app.post('/api/case/:code/messages', async (req, res) => {
+  if (!supabase) return res.status(500).json({ error: 'Database unavailable' });
+  const { content, senderRole } = req.body;
+  if (!content?.trim()) return res.status(400).json({ error: 'Message cannot be empty' });
+  try {
+    const { data: c } = await supabase.from('cases').select('id').eq('case_code', req.params.code.toUpperCase()).maybeSingle();
+    if (!c) return res.status(404).json({ error: 'Case not found' });
+    const { data: msg, error } = await supabase.from('messages').insert({
+      case_id: c.id, sender_role: senderRole || 'user', content: content.trim(),
+    }).select().single();
+    if (error) throw error;
+    return res.status(201).json({ messageId: msg.id, createdAt: msg.created_at });
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to send message' });
+  }
+});
+
+// --- ADMIN ROUTES ---
+
+async function requireStaff(req, res) {
+  if (!supabase) { res.status(500).json({ error: 'Auth unavailable' }); return null; }
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) { res.status(401).json({ error: 'Unauthorized' }); return null; }
+  const { data: { user }, error } = await supabase.auth.getUser(token);
+  if (error || !user) { res.status(401).json({ error: 'Invalid token' }); return null; }
+  if (!['counselor', 'admin', 'legal'].includes(user.user_metadata?.role)) {
+    res.status(403).json({ error: 'Forbidden: staff only' }); return null;
+  }
+  return user;
+}
+
+app.get('/api/admin/cases', async (req, res) => {
+  const user = await requireStaff(req, res); if (!user) return;
+  const { status, risk, page = 1 } = req.query;
+  const pageSize = 20;
+  let q = supabase.from('cases').select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range((+page - 1) * pageSize, +page * pageSize - 1);
+  if (status) q = q.eq('status', status);
+  if (risk) q = q.eq('risk_level', risk);
+  const { data, error, count } = await q;
+  if (error) return res.status(500).json({ error: 'Database error' });
+  return res.json({ cases: data || [], total: count || 0 });
+});
+
+app.patch('/api/admin/cases/:id', async (req, res) => {
+  const user = await requireStaff(req, res); if (!user) return;
+  if (user.user_metadata?.role === 'legal') return res.status(403).json({ error: 'Forbidden' });
+  const { status, assignedTo, note } = req.body;
+  const updates = { updated_at: new Date().toISOString() };
+  if (status) updates.status = status;
+  if (assignedTo !== undefined) updates.assigned_to = assignedTo || null;
+  const { error } = await supabase.from('cases').update(updates).eq('id', req.params.id);
+  if (error) return res.status(500).json({ error: 'Update failed' });
+  if (status || note) {
+    await supabase.from('case_timeline').insert({
+      case_id: req.params.id, status: status || 'updated', note: note || null, changed_by: user.id,
+    });
+  }
+  return res.json({ updated: true });
+});
+
 // SPA catch-all: serve React index.html for all non-API GET routes
 if (serveReact) {
   app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
@@ -245,8 +413,8 @@ function buildGroundingFacts() {
 
   return [
     '--- Grounding Facts ---',
-    'We have a Resources page, a Contact page, and an Awareness page.',
-    'There is no report form, no "report tab", no booking engine, and no account system on this website.',
+    'We have a Home page, About page, Awareness page, Resources page, Contact page, and Report page.',
+    'There IS a secure online report form at /report — survivors can submit anonymous or identified reports. There is also a /dashboard page to track case status and chat with a counselor.',
     `Primary Emergency number: ${SUPPORT_INFO.emergencyNumber}. GBV hotline: ${SUPPORT_INFO.hotlineNumber}. Child helpline: ${SUPPORT_INFO.childHelpline}.`,
     `WhatsApp support: ${SUPPORT_INFO.whatsappNumber}. Email: ${SUPPORT_INFO.email}.`,
     'CRITICAL: For ALL localized facts, emergency processes, specific center details, and RIB protocols, strictly derive your answers from the Custom KnowledgeBase provided below.',
@@ -654,9 +822,9 @@ function getActionsForIntent(intent) {
 
     case 'reporting':
       return [
-        { label: 'Open Resources', url: SUPPORT_INFO.resourcesPage, variant: 'primary' },
+        { label: 'Submit a Report', url: '/report', variant: 'primary' },
         { label: `Call ${SUPPORT_INFO.hotlineNumber}`, url: `tel:${SUPPORT_INFO.hotlineNumber}`, variant: 'soft' },
-        { label: 'Contact Vugandakumva', url: SUPPORT_INFO.contactPage, variant: 'soft' },
+        { label: 'Track My Case', url: '/dashboard', variant: 'soft' },
       ];
 
     case 'contact':

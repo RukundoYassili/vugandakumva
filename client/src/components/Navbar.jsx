@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 const WA_URL = 'https://wa.me/250781640246?text=Hello%20Vugandakumva%20Team%2C%20I%20am%20contacting%20you%20from%20your%20website%20and%20would%20like%20to%20ask%20or%20talk%20about%20gender-based%20violence%20support.';
 
@@ -62,6 +62,16 @@ export default function Navbar() {
               {authUser ? authUser : 'Login'}
             </NavLink>
           </li>
+          <li className="max-md:w-full max-md:border-b max-md:border-gray-100 md:hidden">
+            <Link to="/report" onClick={closeMenu} className="block px-6 py-4 text-[0.92rem] font-bold text-[#2E7D32] flex items-center gap-2">
+              <i className="fas fa-file-alt"></i> Report Now
+            </Link>
+          </li>
+          <li className="max-md:w-full max-md:border-b max-md:border-gray-100 md:hidden">
+            <Link to="/dashboard" onClick={closeMenu} className="block px-6 py-4 text-[0.92rem] font-medium text-[#2D2D2D] flex items-center gap-2">
+              <i className="fas fa-chart-line"></i> My Dashboard
+            </Link>
+          </li>
           <div className="flex items-center gap-3 max-md:px-6 max-md:py-4">
             {[
               { href: 'https://www.facebook.com/vugandakumvainitiative', icon: 'fa-facebook-f', label: 'Facebook' },
@@ -76,6 +86,14 @@ export default function Navbar() {
             ))}
           </div>
         </ul>
+
+        <Link
+          to="/report"
+          className="hidden md:flex items-center gap-2 bg-[#2E7D32] text-white font-bold text-sm py-2.5 px-5 rounded-xl hover:bg-[#1B5E20] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+        >
+          <i className="fas fa-file-alt text-xs"></i>
+          Report Now
+        </Link>
 
         <button
           onClick={() => setMenuOpen(o => !o)}

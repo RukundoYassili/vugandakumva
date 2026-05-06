@@ -13,5 +13,7 @@ services:
         sync: false
       - key: SUPABASE_KEY
         sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
       - key: OLLAMA_ENABLED
         value: "false"

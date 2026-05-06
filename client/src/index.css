@@ -25,9 +25,86 @@ img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
-/* Fade-in animation */
+/* ─── Entrance animations ─── */
 .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-in-left.visible { opacity: 1; transform: translateX(0); }
+.fade-in-right { opacity: 0; transform: translateX(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-in-right.visible { opacity: 1; transform: translateX(0); }
+.fade-in-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in-scale.visible { opacity: 1; transform: scale(1); }
+
+/* ─── Floating orb animation ─── */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-18px) scale(1.04); }
+}
+@keyframes float-mid {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(8deg); }
+}
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-10px) translateX(6px); }
+  66% { transform: translateY(6px) translateX(-4px); }
+}
+.orb-float-slow { animation: float-slow 7s ease-in-out infinite; }
+.orb-float-mid  { animation: float-mid  5s ease-in-out infinite; }
+.orb-float-fast { animation: float-fast 4s ease-in-out infinite; }
+
+/* ─── Gradient animations ─── */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.gradient-animated {
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
+}
+
+/* ─── Glow pulse (for emergency / CTA elements) ─── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107,203,119,0.5); }
+  50% { box-shadow: 0 0 0 12px rgba(107,203,119,0); }
+}
+.glow-pulse { animation: glow-pulse 2.4s ease-in-out infinite; }
+
+/* ─── Shimmer (skeleton / loading) ─── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Dot / grid pattern overlay ─── */
+.pattern-dots {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.pattern-dots-dark {
+  background-image: radial-gradient(circle, rgba(46,125,50,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.pattern-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ─── Glass card ─── */
+.glass {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.glass-dark {
+  background: rgba(27,94,32,0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(107,203,119,0.2);
+}
 
 /* WhatsApp floating button pulse */
 @keyframes pulse-wa {
